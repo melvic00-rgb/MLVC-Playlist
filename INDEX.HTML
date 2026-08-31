@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color"
+          content="#080a0f">
+
+    <title>Music</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <link rel="manifest"
+          href="manifest.json">
+</head>
+
+<body>
+
+    <div class="bg-glow glow-blue"></div>
+    <div class="bg-glow glow-gray"></div>
+
+    <div class="app">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <div class="logo-icon">
+                    ♪
+                </div>
+
+                <div>
+                    <h2>MLVC</h2>
+                    <span>Music</span>
+                </div>
+
+            </div>
+
+            <nav>
+
+                <button class="nav-item active"
+                        id="homeBtn">
+                    <span>⌂</span>
+                    Home
+                </button>
+
+                <button class="nav-item"
+                        id="favoritesBtn">
+                    <span>♥</span>
+                    Favorites
+                </button>
+
+                <button class="nav-item"
+                        id="recentBtn">
+                    <span>◷</span>
+                    Recently Played
+                </button>
+
+                <button class="nav-item"
+                        id="queueBtn">
+                    <span>☷</span>
+                    Queue
+                </button>
+
+            </nav>
+
+            <div class="library-title">
+                YOUR LIBRARY
+            </div>
+
+            <button class="add-library"
+                    id="addMusicBtn">
+
+                <span>＋</span>
+                Add Music
+
+            </button>
+
+            <button class="add-library"
+                    id="addCoverBtn">
+
+                <span>▣</span>
+                Add Cover
+
+            </button>
+
+            <input type="file"
+                   id="musicInput"
+                   accept="audio/*"
+                   multiple
+                   hidden>
+
+            <input type="file"
+                   id="coverInput"
+                   accept="image/*"
+                   hidden>
+
+            <div class="sidebar-bottom">
+
+                <div class="mini-sidebar-card">
+
+                    <div class="mini-note">
+                        ♪
+                    </div>
+
+                    <div>
+                        <strong>MLVC Playlist</strong>
+                        <small>Black • Gray • Blue</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN -->
+
+        <main class="main">
+
+            <header class="topbar">
+
+                <div class="mobile-logo">
+                    ♪  MLVC Playlist
+                </div>
+
+                <div class="search">
+
+                    <span>⌕</span>
+
+                    <input type="text"
+                           id="searchInput"
+                           placeholder="Search music...">
+
+                </div>
+
+            </header>
+
+
+            <!-- HERO -->
+
+            <section class="hero">
+
+                <div class="hero-art-area">
+
+                    <div class="hero-art"
+                         id="albumCover">
+
+                        <span>♪</span>
+
+                    </div>
+
+                    <div class="equalizer"
+                         id="equalizer">
+
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-content">
+
+                    <span class="eyebrow">
+                        NOW PLAYING
+                    </span>
+
+                    <h1 id="songTitle">
+                        Welcome to MLVC Playlist
+                    </h1>
+
+                    <p id="songArtist">
+                        Add your music to begin
+                    </p>
+
+                    <div class="hero-buttons">
+
+                        <button class="play-main"
+                                id="heroPlayBtn">
+                            ▶ Play
+                        </button>
+
+                        <button class="heart-main"
+                                id="favoriteBtn">
+                            ♡
+                        </button>
+
+                        <button class="more-main"
+                                id="editCurrentBtn">
+                            ⋯
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- PLAYER -->
+
+            <section class="player">
+
+                <div class="progress-row">
+
+                    <span id="currentTime">
+                        0:00
+                    </span>
+
+                    <input type="range"
+                           id="progress"
+                           min="0"
+                           max="100"
+                           value="0">
+
+                    <span id="duration">
+                        0:00
+                    </span>
+
+                </div>
+
+
+                <div class="controls">
+
+                    <button class="secondary-control"
+                            id="shuffleBtn">
+                        🔀
+                    </button>
+
+                    <button class="control"
+                            id="prevBtn">
+                        ⏮
+                    </button>
+
+                    <button class="play-button"
+                            id="playBtn">
+                        ▶
+                    </button>
+
+                    <button class="control"
+                            id="nextBtn">
+                        ⏭
+                    </button>
+
+                    <button class="secondary-control"
+                            id="repeatBtn">
+                        🔁
+                    </button>
+
+                </div>
+
+
+                <div class="volume">
+
+                    <button id="muteBtn">
+                        🔊
+                    </button>
+
+                    <input type="range"
+                           id="volume"
+                           min="0"
+                           max="1"
+                           step="0.01"
+                           value="0.8">
+
+                </div>
+
+            </section>
+
+
+            <!-- LIBRARY -->
+
+            <section class="music-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <h2 id="playlistTitle">
+                            Your Music
+                        </h2>
+
+                        <p id="songCount">
+                            0 songs
+                        </p>
+
+                    </div>
+
+                    <button class="add-button"
+                            id="addSmallBtn">
+                        ＋ Add Music
+                    </button>
+
+                </div>
+
+
+                <div class="playlist"
+                     id="playlist">
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- MOBILE PLAYER -->
+
+    <div class="mobile-player">
+
+        <div class="mobile-song">
+
+            <div class="mobile-cover"
+                 id="mobileCover">
+                ♪
+            </div>
+
+            <div>
+
+                <strong id="mobileTitle">
+                    Nothing playing
+                </strong>
+
+                <small id="mobileArtist">
+                    —
+                </small>
+
+            </div>
+
+        </div>
+
+        <button id="mobilePlay">
+            ▶
+        </button>
+
+        <button id="mobileNext">
+            ⏭
+        </button>
+
+    </div>
+
+
+    <!-- EDIT MODAL -->
+
+    <div class="modal"
+         id="editModal">
+
+        <div class="modal-box">
+
+            <div class="modal-header">
+
+                <h2>Edit Song</h2>
+
+                <button id="closeModal">
+                    ×
+                </button>
+
+            </div>
+
+            <label>
+                Song Title
+            </label>
+
+            <input type="text"
+                   id="editTitle">
+
+            <label>
+                Artist
+            </label>
+
+            <input type="text"
+                   id="editArtist">
+
+            <div class="modal-buttons">
+
+                <button id="cancelEdit">
+                    Cancel
+                </button>
+
+                <button class="save-edit"
+                        id="saveEdit">
+                    Save Changes
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <audio id="audio"></audio>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
