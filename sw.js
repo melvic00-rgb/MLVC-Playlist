@@ -1,4 +1,4 @@
-const CACHE_NAME = "mlvc-playlist-v2";
+const CACHE_NAME = "mlvc-playlist-v3";
 
 const APP_FILES = [
   "./style.css",
