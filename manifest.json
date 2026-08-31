@@ -1,22 +1,24 @@
 {
-  "name": "Melvic Music",
-  "short_name": "Melvic Music",
-  "description": "A personal music player made by Melvic.",
+  "name": "MLVC Playlist",
+  "short_name": "MLVC Music",
+  "description": "MLVC Playlist - Personal Music Player",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#07090d",
-  "theme_color": "#07090d",
-  "orientation": "portrait",
+  "background_color": "#08090c",
+  "theme_color": "#1677ff",
+  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
