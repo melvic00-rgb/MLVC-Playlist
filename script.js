@@ -669,3 +669,22 @@ if ("serviceWorker" in navigator) {
 ========================= */
 
 renderEverything();
+
+/* =========================
+   OPENING SCREEN
+========================= */
+
+window.addEventListener("load", () => {
+
+    const openingScreen =
+        document.getElementById("openingScreen");
+
+    setTimeout(() => {
+
+        if (openingScreen) {
+            openingScreen.remove();
+        }
+
+    }, 3500);
+
+});
