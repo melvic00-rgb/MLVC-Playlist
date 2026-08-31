@@ -1,50 +1,10 @@
-const CACHE_NAME = "mlvc-playlist-v3";
-
-const APP_FILES = [
-  "./style.css",
-  "./script.js",
-  "./manifest.json",
-  "./icon-192.png",
-  "./icon-512.png"
-];
-
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(APP_FILES);
-    })
-  );
-
-  self.skipWaiting();
-});
-
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys
-          .filter((key) => key !== CACHE_NAME)
-          .map((key) => caches.delete(key))
-      );
-    })
-  );
-
-  self.clients.claim();
-});
-
-self.addEventListener("fetch", (event) => {
-  // Always get HTML from the network so the latest page loads immediately.
-  if (event.request.mode === "navigate") {
-    event.respondWith(
-      fetch(event.request).catch(() => caches.match("./index.html"))
-    );
-    return;
-  }
-
-  // For CSS/JS/images, use cache first, then network.
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      return cached || fetch(event.request);
-    })
-  );
+const CACHE="mlvc-music-v1";
+const APP=["./","./index.html","./manifest.json","./icon.svg"];
+self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(APP)).then(()=>self.skipWaiting())));
+self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener("fetch",e=>{
+ if(e.request.method!=="GET")return;
+ e.respondWith(caches.match(e.request).then(cached=>cached||fetch(e.request).then(r=>{
+   const copy=r.clone(); caches.open(CACHE).then(c=>c.put(e.request,copy)); return r;
+ }).catch(()=>caches.match("./index.html"))));
 });

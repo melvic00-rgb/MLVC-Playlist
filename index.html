@@ -1,295 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>MLVC Playlist</title>
-
-    <link rel="stylesheet" href="./style.css">
-    <link rel="manifest" href="./manifest.json">
-    <meta name="theme-color" content="#1677ff">
-    <link rel="apple-touch-icon" href="./icon-192.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080a0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MLVC Music">
+<link rel="manifest" href="manifest.json">
+<title>MLVC Music</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#07090d;--panel:#0d1118;--panel2:#111722;--line:#202938;--text:#f5f7fb;--muted:#8c96a8;--blue:#3287ff;--blue2:#56a0ff}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+button,input{font:inherit}button{border:0;cursor:pointer;color:inherit}
+.app{display:flex;min-height:100vh}
+.sidebar{width:245px;background:#090c11;border-right:1px solid var(--line);padding:25px 18px;display:flex;flex-direction:column}
+.logo{display:flex;align-items:center;gap:12px;margin:3px 8px 35px}
+.logo-icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#1a73e8,#11151d);font-size:22px;box-shadow:0 8px 30px #0008}
+.logo h2{font-size:18px}.logo span{font-size:12px;color:var(--muted)}
+nav{display:grid;gap:6px}.nav-item,.add-library{width:100%;background:transparent;color:#aeb7c7;text-align:left;padding:12px 13px;border-radius:10px;display:flex;gap:12px;align-items:center}.nav-item:hover,.nav-item.active,.add-library:hover{background:#141b26;color:#fff}.nav-item span{width:20px;text-align:center}
+.library-title{font-size:10px;color:#667184;letter-spacing:1.5px;margin:30px 12px 8px}
+.add-library{font-size:14px}.sidebar-bottom{margin-top:auto}.mini-sidebar-card{border:1px solid var(--line);background:#0e131b;border-radius:13px;padding:12px;display:flex;gap:10px;align-items:center}.mini-note{width:36px;height:36px;border-radius:9px;background:#151d29;display:grid;place-items:center}.mini-sidebar-card small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.main{flex:1;min-width:0;padding:24px 4.5% 120px;overflow:hidden}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.mobile-logo{display:none;font-weight:800}.search{width:min(420px,100%);background:#0d1219;border:1px solid var(--line);border-radius:12px;padding:10px 13px;display:flex;gap:9px;color:#718096}.search input{background:transparent;border:0;outline:0;color:#fff;width:100%}
+.hero{display:flex;gap:30px;align-items:center;background:radial-gradient(circle at 18% 20%,#172b48 0,#101720 32%,#0b0f15 70%);border:1px solid var(--line);border-radius:22px;padding:30px;min-height:270px}.hero-art-area{position:relative}.hero-art{width:190px;height:190px;border-radius:18px;background:linear-gradient(145deg,#182538,#090c11);display:grid;place-items:center;font-size:65px;box-shadow:0 20px 50px #0008;overflow:hidden;background-size:cover;background-position:center}.hero-art span{filter:drop-shadow(0 5px 15px #000)}.hero-content{min-width:0}.eyebrow{font-size:11px;letter-spacing:2px;color:var(--blue2);font-weight:800}.hero h1{font-size:clamp(25px,4vw,44px);margin:9px 0 6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hero p{color:var(--muted);margin-bottom:20px}.hero-buttons{display:flex;gap:10px}.play-main{background:#fff;color:#080a0f;border-radius:9px;padding:11px 20px;font-weight:800}.heart-main,.more-main{background:#151c27;width:43px;border-radius:9px;font-size:19px}
+.equalizer{position:absolute;right:-8px;bottom:-7px;background:#0a0e14dd;border:1px solid var(--line);border-radius:8px;padding:6px;display:flex;gap:3px;align-items:end}.equalizer i{width:3px;height:10px;background:var(--blue2);animation:eq .8s infinite ease-in-out}.equalizer i:nth-child(2){height:16px;animation-delay:.1s}.equalizer i:nth-child(3){height:8px;animation-delay:.2s}.equalizer i:nth-child(4){height:18px;animation-delay:.3s}.equalizer i:nth-child(5){height:12px;animation-delay:.4s}@keyframes eq{50%{transform:scaleY:.35}}.equalizer.paused i{animation-play-state:paused}
+.player{margin:18px 0 34px;padding:16px 18px;background:#0b0f15;border:1px solid var(--line);border-radius:16px}.progress-row{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--muted)}input[type=range]{accent-color:var(--blue);cursor:pointer}.progress-row input{flex:1}.controls{display:flex;justify-content:center;align-items:center;gap:18px;margin:13px 0}.control,.secondary-control{background:transparent;font-size:19px;color:#9ba6b7}.play-button{width:48px;height:48px;border-radius:50%;background:#fff;color:#080a0f;font-size:17px}.volume{display:flex;justify-content:center;align-items:center;gap:10px}.volume button{background:transparent}.volume input{width:110px}
+.section-heading{display:flex;justify-content:space-between;align-items:end;margin-bottom:15px}.section-heading h2{font-size:22px}.section-heading p{color:var(--muted);font-size:12px;margin-top:3px}.add-button{background:#151c27;padding:9px 13px;border-radius:9px}.playlist{display:grid;gap:7px}.song{display:grid;grid-template-columns:44px 1fr auto auto;gap:12px;align-items:center;padding:9px 10px;border:1px solid transparent;border-radius:12px}.song:hover,.song.current{background:#101721;border-color:var(--line)}.thumb{width:44px;height:44px;border-radius:9px;background:#151c27;display:grid;place-items:center;background-size:cover;background-position:center}.song-info{min-width:0}.song-info strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.song-info small{display:block;color:var(--muted);margin-top:2px}.song button{background:transparent;color:#8e99aa;padding:8px}.empty{color:var(--muted);padding:35px;text-align:center;border:1px dashed var(--line);border-radius:13px}
+.mobile-player{display:none}
+.offline{position:fixed;top:12px;right:12px;z-index:20;background:#121923;border:1px solid var(--line);padding:7px 11px;border-radius:20px;font-size:11px;color:#aab4c3;opacity:0;transform:translateY(-10px);transition:.25s}.offline.show{opacity:1;transform:none}
+@media(max-width:760px){.sidebar{display:none}.main{padding:17px 16px 100px}.mobile-logo{display:block}.topbar{gap:12px}.search{width:100%}.hero{padding:22px;gap:20px;min-height:0}.hero-art{width:125px;height:125px;font-size:45px}.hero h1{font-size:25px}.hero p{font-size:13px}.mobile-player{position:fixed;display:flex;z-index:10;left:10px;right:10px;bottom:10px;background:#10151dF2;backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:15px;padding:8px 10px;align-items:center;gap:8px;box-shadow:0 15px 40px #000b}.mobile-song{display:flex;align-items:center;gap:9px;min-width:0;flex:1}.mobile-cover{width:42px;height:42px;border-radius:8px;background:#18202b;display:grid;place-items:center;background-size:cover;background-position:center}.mobile-song strong,.mobile-song small{display:block;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mobile-song small{font-size:11px;color:var(--muted)}.mobile-player button{background:transparent;font-size:18px;padding:8px}.section-heading{align-items:center}.add-button{font-size:12px}.song{grid-template-columns:40px 1fr auto}.song>.duration{display:none}.thumb{width:40px;height:40px}.volume{display:none}}
+</style>
 </head>
-
 <body>
-
-    <!-- OPENING SCREEN -->
-<div id="openingScreen" class="opening-screen">
-    <div class="opening-content">
-        <div class="opening-logo">♫</div>
-
-        <h1>MLVC</h1>
-        <p>PLAYLIST</p>
-
-        <div class="loading-line">
-            <div></div>
-        </div>
-    </div>
-</div>
-
+<div class="offline" id="offlineBadge">Offline mode</div>
 <div class="app">
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-
-        <div class="logo">
-            <div class="logo-icon">♫</div>
-            <div>
-                <strong>MLVC</strong>
-                <span>PLAYLIST</span>
-            </div>
-        </div>
-
-        <nav>
-            <button class="nav-btn active" data-section="home">
-                <span>⌂</span>
-                Home
-            </button>
-
-            <button class="nav-btn" data-section="favorites">
-                <span>♥</span>
-                Favorites
-            </button>
-
-            <button class="nav-btn" data-section="library">
-                <span>♫</span>
-                Your Library
-            </button>
-        </nav>
-
-        <div class="sidebar-bottom">
-            <label for="musicInput" class="add-music">
-                <span>＋</span>
-                Add Music
-            </label>
-
-            <input
-                type="file"
-                id="musicInput"
-                accept="audio/*"
-                multiple
-                hidden
-            >
-        </div>
-
-    </aside>
-
-
-    <!-- MAIN -->
-    <main class="main">
-
-        <header class="topbar">
-
-            <button class="mobile-menu" id="menuBtn">☰</button>
-
-            <div class="search">
-                <span>⌕</span>
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Search your music..."
-                >
-            </div>
-
-            <button class="profile">
-                <span>ML</span>
-            </button>
-
-        </header>
-
-
-        <!-- HOME -->
-        <section id="homeSection" class="section active">
-
-            <div class="hero">
-
-                <div class="hero-text">
-                    <p class="small-label">YOUR MUSIC</p>
-
-                    <h1>
-                        Your music.<br>
-                        <span>Your mood.</span>
-                    </h1>
-
-                    <p>
-                        Enjoy your favorite songs with a clean,
-                        smooth and personal music experience.
-                    </p>
-
-                    <button class="primary-btn" id="playAllBtn">
-                        ▶ Play All
-                    </button>
-                </div>
-
-                <div class="hero-disc">
-                    <div class="disc">
-                        <div class="disc-center">♫</div>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="section-heading">
-                <div>
-                    <h2>Your Songs</h2>
-                    <p id="songCount">0 songs</p>
-                </div>
-            </div>
-
-            <div id="songList" class="song-list"></div>
-
-            <div id="emptyState" class="empty">
-                <div class="empty-icon">♫</div>
-                <h3>Your library is empty</h3>
-                <p>Add some music to start listening.</p>
-
-                <label for="musicInput" class="primary-btn">
-                    ＋ Add Music
-                </label>
-            </div>
-
-        </section>
-
-
-        <!-- FAVORITES -->
-        <section id="favoritesSection" class="section">
-
-            <div class="page-title">
-                <p class="small-label">YOUR COLLECTION</p>
-                <h1>Favorites</h1>
-                <p>Songs you've saved.</p>
-            </div>
-
-            <div id="favoriteList" class="song-list"></div>
-
-            <div id="favoriteEmpty" class="empty">
-                <div class="empty-icon">♥</div>
-                <h3>No favorites yet</h3>
-                <p>Tap the heart on a song to save it here.</p>
-            </div>
-
-        </section>
-
-
-        <!-- LIBRARY -->
-        <section id="librarySection" class="section">
-
-            <div class="page-title">
-                <p class="small-label">YOUR MUSIC</p>
-                <h1>Library</h1>
-                <p>All the music you've added.</p>
-            </div>
-
-            <div class="library-card">
-
-                <div class="library-stat">
-                    <strong id="librarySongs">0</strong>
-                    <span>Songs</span>
-                </div>
-
-                <div class="library-stat">
-                    <strong id="libraryFavorites">0</strong>
-                    <span>Favorites</span>
-                </div>
-
-            </div>
-
-            <div id="libraryList" class="song-list"></div>
-
-        </section>
-
-    </main>
-
-
-    <!-- NOW PLAYING -->
-    <section class="player">
-
-        <div class="now-playing">
-
-            <div class="album-art" id="albumArt">
-                <span>♫</span>
-            </div>
-
-            <div class="track-info">
-                <strong id="currentTitle">Nothing Playing</strong>
-                <span id="currentArtist">MLVC Playlist</span>
-            </div>
-
-            <button class="heart-btn" id="currentFavorite">♡</button>
-
-        </div>
-
-
-        <div class="player-center">
-
-            <div class="controls">
-
-                <button id="shuffleBtn" class="control secondary">
-                    🔀
-                </button>
-
-                <button id="prevBtn" class="control">
-                    ⏮
-                </button>
-
-                <button id="playBtn" class="play-btn">
-                    ▶
-                </button>
-
-                <button id="nextBtn" class="control">
-                    ⏭
-                </button>
-
-                <button id="repeatBtn" class="control secondary">
-                    🔁
-                </button>
-
-            </div>
-
-            <div class="progress-area">
-
-                <span id="currentTime">0:00</span>
-
-                <input
-                    type="range"
-                    id="progress"
-                    min="0"
-                    max="100"
-                    value="0"
-                >
-
-                <span id="duration">0:00</span>
-
-            </div>
-
-        </div>
-
-
-        <div class="volume">
-
-            <span>🔊</span>
-
-            <input
-                type="range"
-                id="volume"
-                min="0"
-                max="1"
-                step="0.01"
-                value="0.8"
-            >
-
-        </div>
-
-    </section>
-
-</div>
-
-
-<audio id="audio"></audio>
-
-<script src="./script.js"></script>
-
+<aside class="sidebar">
+<div class="logo"><div class="logo-icon">♪</div><div><h2>MLVC</h2><span>Music</span></div></div>
+<nav>
+<button class="nav-item active" id="homeBtn"><span>⌂</span>Home</button>
+<button class="nav-item" id="favoritesBtn"><span>♥</span>Favorites</button>
+<button class="nav-item" id="recentBtn"><span>◷</span>Recently Played</button>
+<button class="nav-item" id="queueBtn"><span>☷</span>Queue</button>
+</nav>
+<div class="library-title">YOUR LIBRARY</div>
+<button class="add-library" id="addMusicBtn"><span>＋</span>Add Music</button>
+<button class="add-library" id="addCoverBtn"><span>▣</span>Add Cover</button>
+<input type="file" id="musicInput" accept="audio/*" multiple hidden>
+<input type="file" id="coverInput" accept="image/*" hidden>
+<div class="sidebar-bottom"><div class="mini-sidebar-card"><div class="mini-note">♪</div><div><strong>MLVC Playlist</strong><small>Offline Music Player</small></div></div></div>
+</aside>
+<main class="main">
+<header class="topbar"><div class="mobile-logo">♪ MLVC Music</div><div class="search"><span>⌕</span><input id="searchInput" placeholder="Search music..."></div></header>
+<section class="hero">
+<div class="hero-art-area"><div class="hero-art" id="albumCover"><span>♪</span></div><div class="equalizer paused" id="equalizer"><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="hero-content"><span class="eyebrow">NOW PLAYING</span><h1 id="songTitle">Welcome to MLVC Music</h1><p id="songArtist">Add music — it will be saved for offline playback</p><div class="hero-buttons"><button class="play-main" id="heroPlayBtn">▶ Play</button><button class="heart-main" id="favoriteBtn">♡</button><button class="more-main" id="editCurrentBtn">⋯</button></div></div>
+</section>
+<section class="player"><div class="progress-row"><span id="currentTime">0:00</span><input id="progress" type="range" min="0" max="100" value="0"><span id="duration">0:00</span></div><div class="controls"><button class="secondary-control" id="shuffleBtn">🔀</button><button class="control" id="prevBtn">⏮</button><button class="play-button" id="playBtn">▶</button><button class="control" id="nextBtn">⏭</button><button class="secondary-control" id="repeatBtn">🔁</button></div><div class="volume"><button id="muteBtn">🔊</button><input id="volume" type="range" min="0" max="1" step=".01" value=".8"></div></section>
+<section class="music-section"><div class="section-heading"><div><h2 id="playlistTitle">Your Music</h2><p id="songCount">0 songs</p></div><button class="add-button" id="addSmallBtn">＋ Add Music</button></div><div class="playlist" id="playlist"></div></section>
+</main></div>
+<div class="mobile-player"><div class="mobile-song"><div class="mobile-cover" id="mobileCover">♪</div><div><strong id="mobileTitle">Nothing playing</strong><small id="mobileArtist">—</small></div></div><button id="mobilePlay">▶</button><button id="mobileNext">⏭</button></div>
+<div class="modal" id="editModal" style="display:none;position:fixed;inset:0;background:#0009;z-index:30;place-items:center;padding:20px"><div style="width:min(420px,100%);background:#10151d;border:1px solid var(--line);border-radius:16px;padding:20px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px"><h2>Edit Song</h2><button id="closeModal" style="background:transparent;font-size:25px">×</button></div><label>Song Title</label><input id="editTitle" style="width:100%;margin:7px 0 14px;padding:11px;background:#080c12;border:1px solid var(--line);border-radius:8px;color:#fff"><label>Artist</label><input id="editArtist" style="width:100%;margin:7px 0 18px;padding:11px;background:#080c12;border:1px solid var(--line);border-radius:8px;color:#fff"><div style="display:flex;justify-content:end;gap:8px"><button id="cancelEdit" style="padding:10px 14px;background:#171e29;border-radius:8px">Cancel</button><button id="saveEdit" style="padding:10px 14px;background:#fff;color:#000;border-radius:8px">Save Changes</button></div></div></div>
+<audio id="audio" preload="metadata"></audio>
+<script>
+const DB_NAME="mlvcMusicDB", DB_VERSION=1, STORE="songs";
+let db, songs=[], currentIndex=-1, shuffle=false, repeat=false, currentBlobUrl=null, currentCoverUrl=null;
+const $=id=>document.getElementById(id);
+const audio=$("audio");
+
+function openDB(){return new Promise((resolve,reject)=>{const r=indexedDB.open(DB_NAME,DB_VERSION);r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains(STORE))d.createObjectStore(STORE,{keyPath:"id",autoIncrement:true})};r.onsuccess=()=>{db=r.result;resolve(db)};r.onerror=()=>reject(r.error)})}
+function tx(mode){return db.transaction(STORE,mode).objectStore(STORE)}
+function getAll(){return new Promise((res,rej)=>{const r=tx("readonly").getAll();r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+function putSong(s){return new Promise((res,rej)=>{const r=tx("readwrite").put(s);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+function delSong(id){return new Promise((res,rej)=>{const r=tx("readwrite").delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+function fmt(sec){if(!isFinite(sec))return"0:00";sec=Math.floor(sec);return Math.floor(sec/60)+":"+String(sec%60).padStart(2,"0")}
+function makeURL(blob){return blob?URL.createObjectURL(blob):null}
+function clearURL(){if(currentBlobUrl){URL.revokeObjectURL(currentBlobUrl);currentBlobUrl=null}if(currentCoverUrl){URL.revokeObjectURL(currentCoverUrl);currentCoverUrl=null}}
+function coverStyle(el,blob){if(!el)return;if(blob){const u=makeURL(blob);el.style.backgroundImage=`url("${u}")`;el.textContent="";setTimeout(()=>URL.revokeObjectURL(u),60000)}else{el.style.backgroundImage="";el.textContent="♪"}}
+function setCover(blob){coverStyle($("albumCover"),blob);coverStyle($("mobileCover"),blob)}
+function render(list=songs){$("songCount").textContent=`${songs.length} song${songs.length!==1?"s":""}`;const p=$("playlist");p.innerHTML="";if(!list.length){p.innerHTML='<div class="empty">No music yet.<br>Tap <b>Add Music</b> to import songs. Your files stay on this device.</div>';return}
+list.forEach(s=>{const real=songs.findIndex(x=>x.id===s.id);const row=document.createElement("div");row.className="song"+(real===currentIndex?" current":"");const thumb=document.createElement("div");thumb.className="thumb";coverStyle(thumb,s.cover);const info=document.createElement("div");info.className="song-info";info.innerHTML=`<strong>${esc(s.title)}</strong><small>${esc(s.artist||"Unknown artist")}</small>`;const dur=document.createElement("small");dur.className="duration";dur.style.color="var(--muted)";dur.textContent=s.duration?fmt(s.duration):"";const play=document.createElement("button");play.textContent="▶";play.onclick=()=>playSong(real);const more=document.createElement("button");more.textContent="⋯";more.onclick=()=>editSong(real);row.append(thumb,info,dur,play,more);p.append(row)})}
+function esc(v){return String(v||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+async function addFiles(files){for(const f of files){if(!f.type.startsWith("audio/"))continue;let title=f.name.replace(/\.[^.]+$/,"");let duration=0;try{const u=URL.createObjectURL(f),a=new Audio(u);await new Promise(r=>{a.onloadedmetadata=()=>{duration=a.duration||0;r()};a.onerror=()=>r()});URL.revokeObjectURL(u)}catch{}await putSong({title,artist:"Local file",file:f,cover:null,duration,favorite:false,added:Date.now()})}songs=await getAll();render();if(currentIndex<0&&songs.length)playSong(0,false)}
+async function playSong(i,autoplay=true){if(!songs[i])return;currentIndex=i;const s=songs[i];clearURL();currentBlobUrl=makeURL(s.file);audio.src=currentBlobUrl;audio.load();$("songTitle").textContent=s.title;$("songArtist").textContent=s.artist||"Unknown artist";$("mobileTitle").textContent=s.title;$("mobileArtist").textContent=s.artist||"Unknown artist";setCover(s.cover);render(filtered());try{if(autoplay)await audio.play()}catch{}updateButtons()}
+function filtered(){const q=$("searchInput").value.trim().toLowerCase();return q?songs.filter(s=>(s.title+" "+(s.artist||"")).toLowerCase().includes(q)):songs}
+function updateButtons(){const on=!audio.paused&&!audio.ended;$("playBtn").textContent=on?"❚❚":"▶";$("heroPlayBtn").textContent=on?"❚❚ Pause":"▶ Play";$("mobilePlay").textContent=on?"❚❚":"▶";$("equalizer").classList.toggle("paused",!on);$("favoriteBtn").textContent=songs[currentIndex]?.favorite?"♥":"♡"}
+async function togglePlay(){if(!songs.length)return;if(currentIndex<0)return playSong(0);if(audio.paused){try{await audio.play()}catch{}}else audio.pause();updateButtons()}
+function next(){if(!songs.length)return;let i;if(shuffle)i=Math.floor(Math.random()*songs.length);else i=(currentIndex+1)%songs.length;playSong(i)}
+function prev(){if(audio.currentTime>4){audio.currentTime=0;return}playSong((currentIndex-1+songs.length)%songs.length)}
+async function editSong(i){if(!songs[i])return;currentIndex=i;$("editTitle").value=songs[i].title;$("editArtist").value=songs[i].artist||"";$("editModal").style.display="grid"}
+async function saveEdit(){const s=songs[currentIndex];if(!s)return;s.title=$("editTitle").value.trim()||s.title;s.artist=$("editArtist").value.trim()||"Unknown artist";await putSong(s);songs=await getAll();$("editModal").style.display="none";playSong(currentIndex,false)}
+async function favorite(){if(!songs[currentIndex])return;songs[currentIndex].favorite=!songs[currentIndex].favorite;await putSong(songs[currentIndex]);songs=await getAll();render(filtered());updateButtons()}
+$("addMusicBtn").onclick=$("addSmallBtn").onclick=()=>$("musicInput").click();
+$("musicInput").onchange=e=>{addFiles([...e.target.files]);e.target.value=""};
+$("addCoverBtn").onclick=()=>$("coverInput").click();
+$("coverInput").onchange=async e=>{if(currentIndex<0||!e.target.files[0])return;let s=songs[currentIndex];s.cover=e.target.files[0];await putSong(s);songs=await getAll();playSong(currentIndex,false);e.target.value=""};
+$("playBtn").onclick=$("heroPlayBtn").onclick=$("mobilePlay").onclick=togglePlay;
+$("nextBtn").onclick=$("mobileNext").onclick=next;$("prevBtn").onclick=prev;
+$("shuffleBtn").onclick=()=>{shuffle=!shuffle;$("shuffleBtn").style.color=shuffle?"var(--blue2)":""};
+$("repeatBtn").onclick=()=>{repeat=!repeat;$("repeatBtn").style.color=repeat?"var(--blue2)":""};
+$("favoriteBtn").onclick=favorite;
+$("editCurrentBtn").onclick=()=>editSong(currentIndex);
+$("closeModal").onclick=$("cancelEdit").onclick=()=>$("editModal").style.display="none";$("saveEdit").onclick=saveEdit;
+$("searchInput").oninput=()=>render(filtered());
+$("progress").oninput=e=>{if(audio.duration)audio.currentTime=(e.target.value/100)*audio.duration};
+$("volume").oninput=e=>audio.volume=+e.target.value;
+$("muteBtn").onclick=()=>{audio.muted=!audio.muted;$("muteBtn").textContent=audio.muted?"🔇":"🔊"};
+audio.volume=.8;
+audio.ontimeupdate=()=>{$("currentTime").textContent=fmt(audio.currentTime);$("progress").value=audio.duration?(audio.currentTime/audio.duration)*100:0};
+audio.onloadedmetadata=()=>{$("duration").textContent=fmt(audio.duration)};
+audio.onplay=updateButtons;audio.onpause=updateButtons;
+audio.onended=()=>{if(repeat)audio.currentTime=0,audio.play();else next()};
+$("favoritesBtn").onclick=()=>render(songs.filter(s=>s.favorite));
+$("recentBtn").onclick=()=>render([...songs].sort((a,b)=>(b.lastPlayed||0)-(a.lastPlayed||0)));
+$("homeBtn").onclick=()=>render();$("queueBtn").onclick=()=>render();
+window.addEventListener("online",()=>{ $("offlineBadge").classList.remove("show")});
+window.addEventListener("offline",()=>{$("offlineBadge").classList.add("show")});
+(async()=>{try{await openDB();songs=await getAll();render();if(songs.length)playSong(0,false)}catch(e){console.error(e)}if(!navigator.onLine)$("offlineBadge").classList.add("show");if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(console.error)})();
+</script>
 </body>
 </html>
